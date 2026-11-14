@@ -1,30 +1,35 @@
-# Streaks
+# Streaks 🔥
 
-Streaks is a simple habit tracker focused on consistency. It runs entirely in the browser and stores progress in `localStorage`, so there is no backend or account setup required.
+A lightweight habit tracker focused on consistency. Streaks runs in your browser and saves habits and progress locally with `localStorage`—no account or backend required.
 
-## Run it
+## Try it online
 
-Open `index.html` in a browser, or start a local static server:
+[Open Streaks on GitHub Pages](https://giusettek.github.io/habit-tracker/)
+
+## Run locally
+
+Open `index.html` in a browser, or start a static server from the project directory:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Then visit http://localhost:8000.
+Then visit <http://localhost:8000>.
 
 ## Features
 
-- Add and remove habits.
-- Mark daily completions.
-- Track streaks and weekly progress.
-- Switch between light and dark mode.
-- Filter habits by status.
-- Save your data locally in the browser.
+- Create and remove habits.
+- Track completions through today; future dates cannot be checked off.
+- View current streaks and weekly progress.
+- Browse the yearly activity heatmap and cumulative completion chart.
+- Switch between light and dark themes.
+- Filter habits by all, active, or done.
+- Responsive layout for desktop and mobile.
 
-## Stack
+## Built with
 
-HTML, CSS, and vanilla JavaScript.
+HTML, CSS, and vanilla JavaScript. No build step or dependencies required.
 
-## Data
+## Your data
 
-Progress stays on the device only. If you clear the browser storage, the saved habits are removed.
+Habit data, theme, and filter preferences are stored in this browser only. They are not synced between devices or sent to a server. Clearing this site's browser storage removes saved progress.
