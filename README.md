@@ -1,10 +1,10 @@
-# Habit Tracker
+# Streaks
 
-A small web app for tracking daily habits. It runs directly in the browser and stores data in `localStorage`, so there is no account, backend, or dependency setup required.
+Streaks is a simple habit tracker focused on consistency. It runs entirely in the browser and stores progress in `localStorage`, so there is no backend or account setup required.
 
 ## Run it
 
-Open `index.html` in your browser. Alternatively, start a local static server from the project folder:
+Open `index.html` in a browser, or start a local static server:
 
 ```bash
 python3 -m http.server 8000
@@ -15,10 +15,11 @@ Then visit http://localhost:8000.
 ## Features
 
 - Add and remove habits.
-- Mark completed days for each habit.
+- Mark daily completions.
 - Track streaks and weekly progress.
-- Keep data saved on the device in `localStorage`.
-- Responsive layout for desktop and mobile.
+- Switch between light and dark mode.
+- Filter habits by status.
+- Save your data locally in the browser.
 
 ## Stack
 
@@ -26,4 +27,4 @@ HTML, CSS, and vanilla JavaScript.
 
 ## Data
 
-Your progress stays in the browser and is not sent to any server. If you clear your browser data, the saved habits will also be removed.
+Progress stays on the device only. If you clear the browser storage, the saved habits are removed.

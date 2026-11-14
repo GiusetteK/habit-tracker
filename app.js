@@ -1,4 +1,6 @@
-const STORAGE_KEY = 'ritmo-habits-v1';
+const STORAGE_KEY = 'streaks-habits-v1';
+const THEME_KEY = 'streaks-theme';
+const FILTER_KEY = 'streaks-filter';
 const palette = ['mint', 'lilac', 'peach', 'blue', 'yellow', 'pink'];
 const icons = ['✳', '◉', '⌁', '✿', '☼', '◇', '↗', '♡'];
 const $ = (selector) => document.querySelector(selector);
@@ -19,11 +21,28 @@ function readHabits() {
   }
 }
 
+function readTheme() {
+  return localStorage.getItem(THEME_KEY) || 'light';
+}
+
+function readFilter() {
+  return localStorage.getItem(FILTER_KEY) || 'all';
+}
+
 let habits = readHabits();
+let currentFilter = readFilter();
 let toastTimer;
 
 function save() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(habits));
+}
+
+function saveTheme() {
+  localStorage.setItem(THEME_KEY, document.body.dataset.theme || 'light');
+}
+
+function saveFilter() {
+  localStorage.setItem(FILTER_KEY, currentFilter);
 }
 
 function dateForWeekday(index) {
@@ -46,12 +65,36 @@ function currentStreak(habit) {
   return streak;
 }
 
+function isHabitDoneToday(habit) {
+  const todayKey = localDateKey(new Date());
+  return Boolean(habit.completed?.[todayKey]);
+}
+
+function getVisibleHabits() {
+  if (currentFilter === 'active') return habits.filter((habit) => !isHabitDoneToday(habit));
+  if (currentFilter === 'done') return habits.filter((habit) => isHabitDoneToday(habit));
+  return habits;
+}
+
 function showToast(message) {
   const toast = $('#toast');
   toast.textContent = message;
   toast.classList.add('visible');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toast.classList.remove('visible'), 2300);
+}
+
+function renderThemeToggle() {
+  const toggle = $('#theme-toggle');
+  const isDark = document.body.dataset.theme === 'dark';
+  toggle.textContent = isDark ? 'Light' : 'Dark';
+  toggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+}
+
+function renderFilterButtons() {
+  document.querySelectorAll('.filter-btn').forEach((button) => {
+    button.classList.toggle('active', button.dataset.filter === currentFilter);
+  });
 }
 
 function renderWeekHeader() {
@@ -65,13 +108,17 @@ function renderWeekHeader() {
 }
 
 function render() {
+  renderThemeToggle();
+  renderFilterButtons();
   renderWeekHeader();
+
+  const visibleHabits = getVisibleHabits();
   const list = $('#habit-list');
-  const empty = habits.length === 0;
+  const empty = visibleHabits.length === 0;
   list.innerHTML = '';
   $('#empty-state').hidden = !empty;
   list.hidden = empty;
-  $('#habit-count').textContent = habits.length;
+  $('#habit-count').textContent = visibleHabits.length;
 
   const todayKey = localDateKey(new Date());
   const completedToday = habits.filter((habit) => habit.completed?.[todayKey]).length;
@@ -87,7 +134,7 @@ function render() {
   $('#week-count').textContent = weekTotal;
   $('#week-caption').textContent = weekTotal === 0 ? 'The week is waiting for you.' : weekTotal === 1 ? 'A great first step!' : 'Small steps, big progress.';
 
-  habits.forEach((habit, habitIndex) => {
+  visibleHabits.forEach((habit, habitIndex) => {
     const row = document.createElement('article');
     row.className = 'habit-row';
     const icon = icons[habitIndex % icons.length];
@@ -119,6 +166,12 @@ function closeForm() {
   $('#habit-form').reset();
   $('#habit-form').hidden = true;
   $('#open-form').hidden = false;
+}
+
+function applyTheme(theme) {
+  document.body.dataset.theme = theme;
+  saveTheme();
+  renderThemeToggle();
 }
 
 $('#today-label').textContent = new Intl.DateTimeFormat('en-US', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date()).toUpperCase();
@@ -159,4 +212,20 @@ $('#habit-list').addEventListener('click', (event) => {
   }
 });
 
+$('.filter-btn').forEach((button) => {
+  button.addEventListener('click', () => {
+    currentFilter = button.dataset.filter;
+    saveFilter();
+    render();
+  });
+});
+
+$('#theme-toggle').addEventListener('click', () => {
+  const nextTheme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+  applyTheme(nextTheme);
+});
+
+const initialTheme = readTheme();
+applyTheme(initialTheme);
+currentFilter = readFilter();
 render();

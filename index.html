@@ -4,32 +4,40 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f7f7f2" />
-    <meta name="description" content="A simple habit tracker to build consistency, one small step at a time." />
-    <title>Ritmo — Habit tracker</title>
+    <meta name="description" content="Streaks is a clean habit tracker for building daily consistency." />
+    <title>Streaks — Habit Tracker</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
   </head>
   <body>
     <div class="app-shell">
       <header class="topbar">
-        <a class="brand" href="#" aria-label="Ritmo homepage">
-          <span class="brand-mark" aria-hidden="true">r.</span>
-          <span>ritmo</span>
+        <a class="brand" href="#" aria-label="Streaks homepage">
+          <span class="brand-mark" aria-hidden="true">s</span>
+          <span>streaks</span>
         </a>
-        <span class="topbar-note"><span class="live-dot"></span> Your personal space</span>
+
+        <div class="top-actions">
+          <div class="filter-switch" aria-label="Filter habits" role="group">
+            <button class="filter-btn active" data-filter="all" type="button">All</button>
+            <button class="filter-btn" data-filter="active" type="button">Active</button>
+            <button class="filter-btn" data-filter="done" type="button">Done</button>
+          </div>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">Dark</button>
+        </div>
       </header>
 
       <main>
         <section class="hero" aria-labelledby="page-title">
           <div class="hero-copy">
             <p class="eyebrow" id="today-label">YOUR JOURNEY</p>
-            <h1 id="page-title">A small step<br /><span>every day.</span></h1>
-            <p class="hero-text">Big things grow from simple habits, repeated with consistency.</p>
+            <h1 id="page-title">Build momentum<br /><span>one day at a time.</span></h1>
+            <p class="hero-text">Big things grow from simple actions, repeated with consistency.</p>
           </div>
           <div class="hero-art" aria-hidden="true">
             <div class="sun"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
             <span class="spark spark-one">✳</span><span class="spark spark-two">✳</span>
-            <span class="art-caption">GROW AT YOUR OWN PACE</span>
+            <span class="art-caption">STEADY OVER TIME</span>
           </div>
         </section>
 
@@ -81,7 +89,7 @@
           <p class="privacy-note"><span aria-hidden="true">◈</span> Your progress is saved only on this device.</p>
         </section>
       </main>
-      <footer><span>Ritmo</span><span>Made with calm, one day at a time.</span></footer>
+      <footer><span>Streaks</span><span>Made with calm, one day at a time.</span></footer>
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </div>
   </body>
