@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f7f2" />
+    <meta name="description" content="Un piccolo passo ogni giorno. Tieni traccia delle tue abitudini con Ritmo." />
+    <title>Ritmo — Habit tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Ritmo, home">
+          <span class="brand-mark" aria-hidden="true">r.</span>
+          <span>ritmo</span>
+        </a>
+        <span class="topbar-note"><span class="live-dot"></span> Il tuo spazio personale</span>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="page-title">
+          <div class="hero-copy">
+            <p class="eyebrow" id="today-label">IL TUO PERCORSO</p>
+            <h1 id="page-title">Un piccolo passo<br /><span>ogni giorno.</span></h1>
+            <p class="hero-text">Le grandi cose nascono da gesti semplici, ripetuti con costanza.</p>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="sun"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+            <span class="spark spark-one">✳</span><span class="spark spark-two">✳</span>
+            <span class="art-caption">CRESCI CON I TUOI TEMPI</span>
+          </div>
+        </section>
+
+        <section class="summary" aria-label="Riepilogo">
+          <article class="summary-card summary-main">
+            <div class="summary-top"><span class="summary-icon">✦</span><span class="summary-label">OGGI</span></div>
+            <div class="summary-value"><strong id="today-count">0</strong><span id="today-total">/ 0 completate</span></div>
+            <div class="progress-track"><div class="progress-fill" id="today-progress"></div></div>
+            <p class="summary-foot" id="today-message">Ogni inizio conta.</p>
+          </article>
+          <article class="summary-card">
+            <div class="summary-top"><span class="summary-icon icon-lilac">↗</span><span class="summary-label">COSTANZA</span></div>
+            <div class="summary-value"><strong id="best-streak">0</strong><span>giorni di fila</span></div>
+            <p class="summary-foot">La tua serie più lunga in corso</p>
+          </article>
+          <article class="summary-card">
+            <div class="summary-top"><span class="summary-icon icon-peach">◷</span><span class="summary-label">QUESTA SETTIMANA</span></div>
+            <div class="summary-value"><strong id="week-count">0</strong><span>giorni completati</span></div>
+            <p class="summary-foot" id="week-caption">Un giorno alla volta.</p>
+          </article>
+        </section>
+
+        <section class="habits-section" aria-labelledby="habits-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">LA TUA ROUTINE</p>
+              <h2 id="habits-title">Le mie abitudini <span class="habit-count" id="habit-count">0</span></h2>
+            </div>
+            <button class="add-button" id="open-form" type="button"><span aria-hidden="true">＋</span> Nuova abitudine</button>
+          </div>
+
+          <form class="add-form" id="habit-form" hidden>
+            <label for="habit-name">Come vuoi chiamarla?</label>
+            <div class="form-row">
+              <input id="habit-name" name="name" type="text" maxlength="48" placeholder="es. Leggere 10 pagine" required />
+              <button class="submit-button" type="submit">Aggiungi</button>
+              <button class="cancel-button" id="cancel-form" type="button" aria-label="Annulla">Annulla</button>
+            </div>
+          </form>
+
+          <div class="week-header" id="week-header" aria-label="Giorni della settimana"></div>
+          <div class="habit-list" id="habit-list"></div>
+          <div class="empty-state" id="empty-state">
+            <span class="empty-illustration" aria-hidden="true">✳</span>
+            <h3>Da dove vuoi cominciare?</h3>
+            <p>Aggiungi la tua prima abitudine e costruisci una routine che ti somiglia.</p>
+            <button class="text-button" id="empty-add" type="button">Crea la prima abitudine <span aria-hidden="true">→</span></button>
+          </div>
+          <p class="privacy-note"><span aria-hidden="true">◈</span> I tuoi progressi restano salvati solo su questo dispositivo.</p>
+        </section>
+      </main>
+      <footer><span>Ritmo</span><span>Fatto con calma, un giorno alla volta.</span></footer>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+  </body>
+</html>
