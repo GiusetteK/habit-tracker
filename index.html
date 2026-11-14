@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="it">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f7f7f2" />
-    <meta name="description" content="Un piccolo passo ogni giorno. Tieni traccia delle tue abitudini con Ritmo." />
+    <meta name="description" content="A simple habit tracker to build consistency, one small step at a time." />
     <title>Ritmo — Habit tracker</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
@@ -12,76 +12,76 @@
   <body>
     <div class="app-shell">
       <header class="topbar">
-        <a class="brand" href="#" aria-label="Ritmo, home">
+        <a class="brand" href="#" aria-label="Ritmo homepage">
           <span class="brand-mark" aria-hidden="true">r.</span>
           <span>ritmo</span>
         </a>
-        <span class="topbar-note"><span class="live-dot"></span> Il tuo spazio personale</span>
+        <span class="topbar-note"><span class="live-dot"></span> Your personal space</span>
       </header>
 
       <main>
         <section class="hero" aria-labelledby="page-title">
           <div class="hero-copy">
-            <p class="eyebrow" id="today-label">IL TUO PERCORSO</p>
-            <h1 id="page-title">Un piccolo passo<br /><span>ogni giorno.</span></h1>
-            <p class="hero-text">Le grandi cose nascono da gesti semplici, ripetuti con costanza.</p>
+            <p class="eyebrow" id="today-label">YOUR JOURNEY</p>
+            <h1 id="page-title">A small step<br /><span>every day.</span></h1>
+            <p class="hero-text">Big things grow from simple habits, repeated with consistency.</p>
           </div>
           <div class="hero-art" aria-hidden="true">
             <div class="sun"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
             <span class="spark spark-one">✳</span><span class="spark spark-two">✳</span>
-            <span class="art-caption">CRESCI CON I TUOI TEMPI</span>
+            <span class="art-caption">GROW AT YOUR OWN PACE</span>
           </div>
         </section>
 
-        <section class="summary" aria-label="Riepilogo">
+        <section class="summary" aria-label="Summary">
           <article class="summary-card summary-main">
-            <div class="summary-top"><span class="summary-icon">✦</span><span class="summary-label">OGGI</span></div>
-            <div class="summary-value"><strong id="today-count">0</strong><span id="today-total">/ 0 completate</span></div>
+            <div class="summary-top"><span class="summary-icon">✦</span><span class="summary-label">TODAY</span></div>
+            <div class="summary-value"><strong id="today-count">0</strong><span id="today-total">/ 0 completed</span></div>
             <div class="progress-track"><div class="progress-fill" id="today-progress"></div></div>
-            <p class="summary-foot" id="today-message">Ogni inizio conta.</p>
+            <p class="summary-foot" id="today-message">Every beginning counts.</p>
           </article>
           <article class="summary-card">
-            <div class="summary-top"><span class="summary-icon icon-lilac">↗</span><span class="summary-label">COSTANZA</span></div>
-            <div class="summary-value"><strong id="best-streak">0</strong><span>giorni di fila</span></div>
-            <p class="summary-foot">La tua serie più lunga in corso</p>
+            <div class="summary-top"><span class="summary-icon icon-lilac">↗</span><span class="summary-label">STREAK</span></div>
+            <div class="summary-value"><strong id="best-streak">0</strong><span>days in a row</span></div>
+            <p class="summary-foot">Your longest streak so far</p>
           </article>
           <article class="summary-card">
-            <div class="summary-top"><span class="summary-icon icon-peach">◷</span><span class="summary-label">QUESTA SETTIMANA</span></div>
-            <div class="summary-value"><strong id="week-count">0</strong><span>giorni completati</span></div>
-            <p class="summary-foot" id="week-caption">Un giorno alla volta.</p>
+            <div class="summary-top"><span class="summary-icon icon-peach">◷</span><span class="summary-label">THIS WEEK</span></div>
+            <div class="summary-value"><strong id="week-count">0</strong><span>days completed</span></div>
+            <p class="summary-foot" id="week-caption">One day at a time.</p>
           </article>
         </section>
 
         <section class="habits-section" aria-labelledby="habits-title">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">LA TUA ROUTINE</p>
-              <h2 id="habits-title">Le mie abitudini <span class="habit-count" id="habit-count">0</span></h2>
+              <p class="eyebrow">YOUR ROUTINE</p>
+              <h2 id="habits-title">My habits <span class="habit-count" id="habit-count">0</span></h2>
             </div>
-            <button class="add-button" id="open-form" type="button"><span aria-hidden="true">＋</span> Nuova abitudine</button>
+            <button class="add-button" id="open-form" type="button"><span aria-hidden="true">＋</span> New habit</button>
           </div>
 
           <form class="add-form" id="habit-form" hidden>
-            <label for="habit-name">Come vuoi chiamarla?</label>
+            <label for="habit-name">What do you want to call it?</label>
             <div class="form-row">
-              <input id="habit-name" name="name" type="text" maxlength="48" placeholder="es. Leggere 10 pagine" required />
-              <button class="submit-button" type="submit">Aggiungi</button>
-              <button class="cancel-button" id="cancel-form" type="button" aria-label="Annulla">Annulla</button>
+              <input id="habit-name" name="name" type="text" maxlength="48" placeholder="e.g. Read 10 pages" required />
+              <button class="submit-button" type="submit">Add</button>
+              <button class="cancel-button" id="cancel-form" type="button" aria-label="Cancel">Cancel</button>
             </div>
           </form>
 
-          <div class="week-header" id="week-header" aria-label="Giorni della settimana"></div>
+          <div class="week-header" id="week-header" aria-label="Week days"></div>
           <div class="habit-list" id="habit-list"></div>
           <div class="empty-state" id="empty-state">
             <span class="empty-illustration" aria-hidden="true">✳</span>
-            <h3>Da dove vuoi cominciare?</h3>
-            <p>Aggiungi la tua prima abitudine e costruisci una routine che ti somiglia.</p>
-            <button class="text-button" id="empty-add" type="button">Crea la prima abitudine <span aria-hidden="true">→</span></button>
+            <h3>Where do you want to start?</h3>
+            <p>Add your first habit and build a routine that fits your life.</p>
+            <button class="text-button" id="empty-add" type="button">Create your first habit <span aria-hidden="true">→</span></button>
           </div>
-          <p class="privacy-note"><span aria-hidden="true">◈</span> I tuoi progressi restano salvati solo su questo dispositivo.</p>
+          <p class="privacy-note"><span aria-hidden="true">◈</span> Your progress is saved only on this device.</p>
         </section>
       </main>
-      <footer><span>Ritmo</span><span>Fatto con calma, un giorno alla volta.</span></footer>
+      <footer><span>Ritmo</span><span>Made with calm, one day at a time.</span></footer>
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </div>
   </body>

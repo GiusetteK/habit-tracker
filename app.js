@@ -55,13 +55,13 @@ function showToast(message) {
 }
 
 function renderWeekHeader() {
-  const names = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
+  const names = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   const todayKey = localDateKey(new Date());
-  $('#week-header').innerHTML = `<span class="week-spacer">ABITUDINE</span>${names.map((name, i) => {
+  $('#week-header').innerHTML = `<span class="week-spacer">HABIT</span>${names.map((name, i) => {
     const date = dateForWeekday(i);
     const isToday = localDateKey(date) === todayKey;
     return `<span class="day-heading${isToday ? ' is-today' : ''}"><span>${name}</span><b>${date.getDate()}</b></span>`;
-  }).join('')}<span class="streak-heading">SERIE</span>`;
+  }).join('')}<span class="streak-heading">STREAK</span>`;
 }
 
 function render() {
@@ -77,15 +77,15 @@ function render() {
   const completedToday = habits.filter((habit) => habit.completed?.[todayKey]).length;
   const percent = habits.length ? Math.round((completedToday / habits.length) * 100) : 0;
   $('#today-count').textContent = completedToday;
-  $('#today-total').textContent = `/ ${habits.length} ${habits.length === 1 ? 'completata' : 'completate'}`;
+  $('#today-total').textContent = `/ ${habits.length} ${habits.length === 1 ? 'completed' : 'completed'}`;
   $('#today-progress').style.width = `${percent}%`;
-  $('#today-message').textContent = habits.length === 0 ? 'Ogni inizio conta.' : percent === 100 ? 'Bravissima, hai fatto tutto! ✨' : percent > 0 ? 'Ottimo, continua così.' : 'Un piccolo passo alla volta.';
+  $('#today-message').textContent = habits.length === 0 ? 'Every beginning counts.' : percent === 100 ? 'Amazing, you did it all! ✨' : percent > 0 ? 'Nice work, keep going.' : 'One step at a time.';
 
   const streak = habits.reduce((best, habit) => Math.max(best, currentStreak(habit)), 0);
   $('#best-streak').textContent = streak;
   const weekTotal = habits.reduce((sum, habit) => sum + Array.from({ length: 7 }, (_, i) => habit.completed?.[localDateKey(dateForWeekday(i))] ? 1 : 0).reduce((a, b) => a + b, 0), 0);
   $('#week-count').textContent = weekTotal;
-  $('#week-caption').textContent = weekTotal === 0 ? 'La settimana è tutta da scrivere.' : weekTotal === 1 ? 'Un bel primo passo!' : 'Piccoli progressi, grande differenza.';
+  $('#week-caption').textContent = weekTotal === 0 ? 'The week is waiting for you.' : weekTotal === 1 ? 'A great first step!' : 'Small steps, big progress.';
 
   habits.forEach((habit, habitIndex) => {
     const row = document.createElement('article');
@@ -97,10 +97,10 @@ function render() {
       const key = localDateKey(date);
       const checked = Boolean(habit.completed?.[key]);
       const isToday = key === todayKey;
-      return `<button class="day-cell${checked ? ' checked' : ''}${isToday ? ' is-today' : ''}" type="button" data-habit="${habit.id}" data-date="${key}" aria-label="${checked ? 'Annulla' : 'Segna'} ${habit.name}, ${date.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' })}" aria-pressed="${checked}">${checked ? '<span aria-hidden="true">✓</span>' : ''}</button>`;
+      return `<button class="day-cell${checked ? ' checked' : ''}${isToday ? ' is-today' : ''}" type="button" data-habit="${habit.id}" data-date="${key}" aria-label="${checked ? 'Undo' : 'Mark'} ${habit.name}, ${date.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' })}" aria-pressed="${checked}">${checked ? '<span aria-hidden="true">✓</span>' : ''}</button>`;
     }).join('');
     const streakValue = currentStreak(habit);
-    row.innerHTML = `<div class="habit-info"><span class="habit-icon ${color}" aria-hidden="true">${icon}</span><span class="habit-name" title="${escapeHTML(habit.name)}">${escapeHTML(habit.name)}</span><button class="delete-button" type="button" data-delete="${habit.id}" aria-label="Rimuovi ${escapeHTML(habit.name)}" title="Rimuovi abitudine">×</button></div><div class="day-cells">${cells}</div><div class="streak-value">${streakValue ? `<span aria-hidden="true">🔥</span> ${streakValue}` : '<span class="streak-empty">—</span>'}</div>`;
+    row.innerHTML = `<div class="habit-info"><span class="habit-icon ${color}" aria-hidden="true">${icon}</span><span class="habit-name" title="${escapeHTML(habit.name)}">${escapeHTML(habit.name)}</span><button class="delete-button" type="button" data-delete="${habit.id}" aria-label="Remove ${escapeHTML(habit.name)}" title="Remove habit">×</button></div><div class="day-cells">${cells}</div><div class="streak-value">${streakValue ? `<span aria-hidden="true">🔥</span> ${streakValue}` : '<span class="streak-empty">—</span>'}</div>`;
     list.append(row);
   });
 }
@@ -121,7 +121,7 @@ function closeForm() {
   $('#open-form').hidden = false;
 }
 
-$('#today-label').textContent = new Intl.DateTimeFormat('it-IT', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date()).toLocaleUpperCase('it-IT');
+$('#today-label').textContent = new Intl.DateTimeFormat('en-US', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date()).toUpperCase();
 $('#open-form').addEventListener('click', openForm);
 $('#empty-add').addEventListener('click', openForm);
 $('#cancel-form').addEventListener('click', closeForm);
@@ -134,7 +134,7 @@ $('#habit-form').addEventListener('submit', (event) => {
   save();
   closeForm();
   render();
-  showToast('Nuova abitudine aggiunta ✨');
+  showToast('New habit added ✨');
 });
 
 $('#habit-list').addEventListener('click', (event) => {
@@ -155,7 +155,7 @@ $('#habit-list').addEventListener('click', (event) => {
     habits = habits.filter((habit) => habit.id !== remove.dataset.delete);
     save();
     render();
-    showToast('Abitudine rimossa.');
+    showToast('Habit removed.');
   }
 });
 
