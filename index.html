@@ -13,83 +13,104 @@
     <div class="app-shell">
       <header class="topbar">
         <a class="brand" href="#" aria-label="Streaks homepage">
-          <span class="brand-mark" aria-hidden="true">s</span>
+          <span class="brand-mark" aria-hidden="true">🔥</span>
           <span>streaks</span>
         </a>
-
+        <nav class="view-switch" aria-label="Main navigation">
+          <button class="view-btn active" type="button" data-view="habits">Habits</button>
+          <button class="view-btn" type="button" data-view="activity">Activity</button>
+        </nav>
         <div class="top-actions">
           <div class="filter-switch" aria-label="Filter habits" role="group">
             <button class="filter-btn active" data-filter="all" type="button">All</button>
             <button class="filter-btn" data-filter="active" type="button">Active</button>
             <button class="filter-btn" data-filter="done" type="button">Done</button>
           </div>
-          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">Dark</button>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode">Dark</button>
         </div>
       </header>
 
       <main>
-        <section class="hero" aria-labelledby="page-title">
-          <div class="hero-copy">
-            <p class="eyebrow" id="today-label">YOUR JOURNEY</p>
-            <h1 id="page-title">Build momentum<br /><span>one day at a time.</span></h1>
-            <p class="hero-text">Big things grow from simple actions, repeated with consistency.</p>
-          </div>
-          <div class="hero-art" aria-hidden="true">
-            <div class="sun"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-            <span class="spark spark-one">✳</span><span class="spark spark-two">✳</span>
-            <span class="art-caption">STEADY OVER TIME</span>
-          </div>
-        </section>
-
-        <section class="summary" aria-label="Summary">
-          <article class="summary-card summary-main">
-            <div class="summary-top"><span class="summary-icon">✦</span><span class="summary-label">TODAY</span></div>
-            <div class="summary-value"><strong id="today-count">0</strong><span id="today-total">/ 0 completed</span></div>
-            <div class="progress-track"><div class="progress-fill" id="today-progress"></div></div>
-            <p class="summary-foot" id="today-message">Every beginning counts.</p>
-          </article>
-          <article class="summary-card">
-            <div class="summary-top"><span class="summary-icon icon-lilac">↗</span><span class="summary-label">STREAK</span></div>
-            <div class="summary-value"><strong id="best-streak">0</strong><span>days in a row</span></div>
-            <p class="summary-foot">Your longest streak so far</p>
-          </article>
-          <article class="summary-card">
-            <div class="summary-top"><span class="summary-icon icon-peach">◷</span><span class="summary-label">THIS WEEK</span></div>
-            <div class="summary-value"><strong id="week-count">0</strong><span>days completed</span></div>
-            <p class="summary-foot" id="week-caption">One day at a time.</p>
-          </article>
-        </section>
-
-        <section class="habits-section" aria-labelledby="habits-title">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">YOUR ROUTINE</p>
-              <h2 id="habits-title">My habits <span class="habit-count" id="habit-count">0</span></h2>
+        <div id="habits-view">
+          <section class="hero" aria-labelledby="page-title">
+            <div class="hero-copy">
+              <p class="eyebrow" id="today-label">YOUR JOURNEY</p>
+              <h1 id="page-title">Build momentum<br /><span>one day at a time.</span></h1>
+              <p class="hero-text">Big things grow from simple actions, repeated with consistency.</p>
             </div>
-            <button class="add-button" id="open-form" type="button"><span aria-hidden="true">＋</span> New habit</button>
-          </div>
-
-          <form class="add-form" id="habit-form" hidden>
-            <label for="habit-name">What do you want to call it?</label>
-            <div class="form-row">
-              <input id="habit-name" name="name" type="text" maxlength="48" placeholder="e.g. Read 10 pages" required />
-              <button class="submit-button" type="submit">Add</button>
-              <button class="cancel-button" id="cancel-form" type="button" aria-label="Cancel">Cancel</button>
+            <div class="hero-art" aria-hidden="true">
+              <div class="sun"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+              <span class="spark spark-one">✳</span><span class="spark spark-two">✳</span>
+              <span class="art-caption">STEADY OVER TIME</span>
             </div>
-          </form>
+          </section>
 
-          <div class="week-header" id="week-header" aria-label="Week days"></div>
-          <div class="habit-list" id="habit-list"></div>
-          <div class="empty-state" id="empty-state">
-            <span class="empty-illustration" aria-hidden="true">✳</span>
-            <h3>Where do you want to start?</h3>
-            <p>Add your first habit and build a routine that fits your life.</p>
-            <button class="text-button" id="empty-add" type="button">Create your first habit <span aria-hidden="true">→</span></button>
+          <section class="summary" aria-label="Summary">
+            <article class="summary-card summary-main">
+              <div class="summary-top"><span class="summary-icon">✦</span><span class="summary-label">TODAY</span></div>
+              <div class="summary-value"><strong id="today-count">0</strong><span id="today-total">/ 0 completed</span></div>
+              <div class="progress-track"><div class="progress-fill" id="today-progress"></div></div>
+              <p class="summary-foot" id="today-message">Every beginning counts.</p>
+            </article>
+            <article class="summary-card">
+              <div class="summary-top"><span class="summary-icon icon-lilac">↗</span><span class="summary-label">STREAK</span></div>
+              <div class="summary-value"><strong id="best-streak">0</strong><span>days in a row</span></div>
+              <p class="summary-foot">Your longest streak so far</p>
+            </article>
+            <article class="summary-card">
+              <div class="summary-top"><span class="summary-icon icon-peach">◷</span><span class="summary-label">THIS WEEK</span></div>
+              <div class="summary-value"><strong id="week-count">0</strong><span>days completed</span></div>
+              <p class="summary-foot" id="week-caption">One day at a time.</p>
+            </article>
+          </section>
+
+          <section class="habits-section" aria-labelledby="habits-title">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">YOUR ROUTINE</p>
+                <h2 id="habits-title">My habits <span class="habit-count" id="habit-count">0</span></h2>
+              </div>
+              <button class="add-button" id="open-form" type="button"><span aria-hidden="true">＋</span> New habit</button>
+            </div>
+            <form class="add-form" id="habit-form" hidden>
+              <label for="habit-name">What do you want to call it?</label>
+              <div class="form-row">
+                <input id="habit-name" name="name" type="text" maxlength="48" placeholder="e.g. Read 10 pages" required />
+                <button class="submit-button" type="submit">Add</button>
+                <button class="cancel-button" id="cancel-form" type="button" aria-label="Cancel">Cancel</button>
+              </div>
+            </form>
+            <div class="week-header" id="week-header" aria-label="Week days"></div>
+            <div class="habit-list" id="habit-list"></div>
+            <div class="empty-state" id="empty-state">
+              <span class="empty-illustration" aria-hidden="true">✳</span>
+              <h3>Where do you want to start?</h3>
+              <p>Add your first habit and build a routine that fits your life.</p>
+              <button class="text-button" id="empty-add" type="button">Create your first habit <span aria-hidden="true">→</span></button>
+            </div>
+            <p class="privacy-note"><span aria-hidden="true">◈</span> Your progress is saved only on this device.</p>
+          </section>
+        </div>
+
+        <section class="activity-view" id="activity-view" aria-labelledby="activity-title" hidden>
+          <div class="activity-heading">
+            <div><p class="eyebrow">YOUR CONSISTENCY, AT A GLANCE</p><h1 id="activity-title">Activity</h1></div>
+            <div class="year-control"><button id="previous-year" type="button" aria-label="Previous year">‹</button><strong id="activity-year"></strong><button id="next-year" type="button" aria-label="Next year">›</button></div>
           </div>
-          <p class="privacy-note"><span aria-hidden="true">◈</span> Your progress is saved only on this device.</p>
+          <div class="activity-stats">
+            <article class="summary-card"><span class="summary-label">COMPLETIONS THIS YEAR</span><strong id="year-completions">0</strong></article>
+            <article class="summary-card"><span class="summary-label">ACTIVE DAYS</span><strong id="active-days">0</strong></article>
+            <article class="summary-card"><span class="summary-label">HABITS TRACKED</span><strong id="tracked-habits">0</strong></article>
+          </div>
+          <div class="heatmap-card">
+            <p class="heatmap-intro">Each square represents a day. The more habits you complete, the brighter it gets.</p>
+            <div class="heatmap-scroll"><div class="month-labels" id="month-labels"></div><div class="heatmap" id="heatmap" role="img" aria-label="Habit completion activity calendar"></div></div>
+            <div class="heatmap-legend"><span>Less</span><i class="level-0"></i><i class="level-1"></i><i class="level-2"></i><i class="level-3"></i><i class="level-4"></i><span>More</span></div>
+          </div>
+          <p class="privacy-note"><span aria-hidden="true">◈</span> Your activity is saved only on this device.</p>
         </section>
       </main>
-      <footer><span>Streaks</span><span>Made with calm, one day at a time.</span></footer>
+      <footer><span>Streaks 🔥</span><span>Made with calm, one day at a time.</span></footer>
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </div>
   </body>
