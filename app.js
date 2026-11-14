@@ -27,6 +27,17 @@ let currentView = 'habits';
 let activityYear = new Date().getFullYear();
 let toastTimer;
 function save() { storageSet(STORAGE_KEY, JSON.stringify(habits)); }
+function getWeekDates() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+  return Array.from({ length: 7 }, (_, i) => {
+    const date = new Date(monday);
+    date.setDate(monday.getDate() + i);
+    return date;
+  }).filter((date) => date <= today);
+}
 function dateForWeekday(index) {
   const today = new Date();
   const monday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - ((today.getDay() + 6) % 7));
@@ -65,10 +76,11 @@ function applyTheme(theme) {
 }
 function renderWeekHeader() {
   const names = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const weekDates = getWeekDates();
   const todayKey = localDateKey(new Date());
-  $('#week-header').innerHTML = `<span class="week-spacer">HABIT</span>${names.map((name, i) => {
-    const date = dateForWeekday(i);
-    return `<span class="day-heading${localDateKey(date) === todayKey ? ' is-today' : ''}"><span>${name}</span><b>${date.getDate()}</b></span>`;
+  $('#week-header').innerHTML = `<span class="week-spacer">HABIT</span>${weekDates.map((date, i) => {
+    const isToday = localDateKey(date) === todayKey;
+    return `<span class="day-heading${isToday ? ' is-today' : ''}"><span>${names[date.getDay() === 0 ? 6 : date.getDay() - 1]}</span><b>${date.getDate()}</b></span>`;
   }).join('')}<span class="streak-heading">STREAK</span>`;
 }
 function escapeHTML(value) {
@@ -84,6 +96,7 @@ function renderHabits() {
   $('#habit-count').textContent = visible.length;
   $$('.filter-btn').forEach((button) => button.classList.toggle('active', button.dataset.filter === currentFilter));
   const todayKey = localDateKey(new Date());
+  const weekDates = getWeekDates();
   const completedToday = habits.filter((h) => h.completed?.[todayKey]).length;
   const percent = habits.length ? Math.round(completedToday / habits.length * 100) : 0;
   $('#today-count').textContent = completedToday;
@@ -91,20 +104,20 @@ function renderHabits() {
   $('#today-progress').style.width = `${percent}%`;
   $('#today-message').textContent = !habits.length ? 'Every beginning counts.' : percent === 100 ? 'Amazing, you did it all! ✨' : percent ? 'Nice work, keep going.' : 'One step at a time.';
   $('#best-streak').textContent = habits.reduce((best, habit) => Math.max(best, currentStreak(habit)), 0);
-  const weekTotal = habits.reduce((sum, habit) => sum + Array.from({ length: 7 }, (_, i) => habit.completed?.[localDateKey(dateForWeekday(i))] ? 1 : 0).reduce((a, b) => a + b, 0), 0);
+  const weekTotal = habits.reduce((sum, habit) => sum + weekDates.reduce((count, date) => count + (habit.completed?.[localDateKey(date)] ? 1 : 0), 0), 0);
   $('#week-count').textContent = weekTotal;
   $('#week-caption').textContent = weekTotal === 0 ? 'The week is waiting for you.' : weekTotal === 1 ? 'A great first step!' : 'Small steps, big progress.';
 
   visible.forEach((habit, habitIndex) => {
     const row = document.createElement('article');
     row.className = 'habit-row';
-    const cells = Array.from({ length: 7 }, (_, i) => {
-      const date = dateForWeekday(i);
+    const cells = weekDates.map((date) => {
       const key = localDateKey(date);
       const checked = Boolean(habit.completed?.[key]);
-      const future = key > todayKey;
-      const dateLabel = date.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' });
-      return `<button class="day-cell${checked ? ' checked' : ''}${key === todayKey ? ' is-today' : ''}${future ? ' future' : ''}" type="button" data-habit="${escapeHTML(habit.id)}" data-date="${key}" aria-label="${future ? 'Not available yet: ' : checked ? 'Undo ' : 'Mark '}${escapeHTML(habit.name)}, ${dateLabel}" aria-pressed="${checked}"${future ? ' disabled title="This day has not happened yet"' : ''}>${checked ? '<span aria-hidden="true">✓</span>' : ''}</button>`;
+      const isToday = key === todayKey;
+      const label = date.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' });
+      const disabled = date > new Date(new Date().setHours(0,0,0,0));
+      return `<button class="day-cell${checked ? ' checked' : ''}${isToday ? ' is-today' : ''}" type="button" data-habit="${escapeHTML(habit.id)}" data-date="${key}" aria-label="${checked ? 'Undo ' : 'Mark '}${escapeHTML(habit.name)}, ${label}" aria-pressed="${checked}"${disabled ? ' disabled title="This day has not happened yet"' : ''}>${checked ? '<span aria-hidden="true">✓</span>' : ''}</button>`;
     }).join('');
     row.innerHTML = `<div class="habit-info"><span class="habit-icon ${palette[habitIndex % palette.length]}" aria-hidden="true">${icons[habitIndex % icons.length]}</span><span class="habit-name" title="${escapeHTML(habit.name)}">${escapeHTML(habit.name)}</span><button class="delete-button" type="button" data-delete="${escapeHTML(habit.id)}" aria-label="Remove ${escapeHTML(habit.name)}" title="Remove habit">×</button></div><div class="day-cells">${cells}</div><div class="streak-value">${currentStreak(habit) ? `<span aria-hidden="true">🔥</span> ${currentStreak(habit)}` : '<span class="streak-empty">—</span>'}</div>`;
     list.append(row);
